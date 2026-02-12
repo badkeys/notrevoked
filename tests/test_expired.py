@@ -5,7 +5,7 @@ import os
 import pathlib
 import unittest
 
-import isrevoked
+import notrevoked
 
 TDPATH = f"{os.path.dirname(__file__)}/data/"
 
@@ -16,7 +16,7 @@ class TestExpired(unittest.TestCase):
         for crtfile in ["expired-crl.crt", "expired-ocsp.crt"]:
             crtfp = os.path.join(TDPATH, crtfile)
             crt = pathlib.Path(crtfp).read_bytes()
-            ret = isrevoked.isrevoked(crt)
+            ret = notrevoked.notrevoked(crt)
             self.assertEqual(ret, "expired")
 
 

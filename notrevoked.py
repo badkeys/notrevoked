@@ -23,9 +23,9 @@ from cryptography.x509.oid import AuthorityInformationAccessOID, ExtensionOID
 def _cachedir():
     cachehome = os.getenv("XDG_CACHE_HOME")
     if cachehome:
-        cachedir = os.path.join(cachehome, "isrevoked", "")
+        cachedir = os.path.join(cachehome, "notrevoked", "")
     else:
-        cachedir = os.path.expanduser("~/.cache/isrevoked/")
+        cachedir = os.path.expanduser("~/.cache/notrevoked/")
     if not os.path.isdir(cachedir):
         os.mkdir(cachedir)
     return cachedir
@@ -143,7 +143,7 @@ def checkocsp(cert, ocsp_url, issuer_url):
     return "error"
 
 
-def isrevoked(pem):
+def notrevoked(pem):
     cert = x509.load_pem_x509_certificate(pem)
 
     if cert.not_valid_after_utc < datetime.datetime.now(tz=datetime.UTC):
@@ -168,5 +168,5 @@ if __name__ == "__main__":
     ret = 0
     for certfile in args.certificate:
         pem = pathlib.Path(certfile).read_bytes()
-        rev = isrevoked(pem)
+        rev = notrevoked(pem)
         print(f"{certfile}: {rev}")
