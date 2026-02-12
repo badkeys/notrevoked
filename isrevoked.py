@@ -72,9 +72,9 @@ def _getfromcache(cachetype, url):
             raw = u.read()
             mimetype = u.headers.get_content_type()
         if cachetype == "issuer" and mimetype != "application/pkix-cert":
-            _warn(f"Wrong content type {mimetype} for CA issuer")
+            _warn(f"Wrong content type {mimetype} for CA issuer {url}")
         elif cachetype == "crl" and mimetype != "application/pkix-crl":
-            _warn(f"Wrong content type {mimetype} for CRL")
+            _warn(f"Wrong content type {mimetype} for CRL {url}")
 
         if not os.path.isdir(cachep):
             os.mkdir(cachep)
